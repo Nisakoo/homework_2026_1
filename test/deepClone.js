@@ -83,4 +83,31 @@ QUnit.module("Тестируем функцию deepClone", () => {
       "Вложенные массивы должны быть независимым",
     );
   });
+
+  QUnit.test("Работает правильно для пустого массива", (assert) => {
+    const original = [];
+    const cloned = deepClone(original);
+
+    assert.deepEqual(
+      cloned,
+      original,
+      "Копия массива должна быть равна оригиналу",
+    );
+  });
+
+  QUnit.test("Работает правильно для объекта без прототипа", (assert) => {
+    const original = Object.create(null);
+
+    original.name = "name";
+    original.age = 20;
+
+    const cloned = deepClone(original);
+
+    assert.deepEqual(cloned, original, "Копии должны быть одинаковы");
+    assert.strictEqual(
+      Object.getPrototypeOf(cloned),
+      null,
+      "Клон тоже не должен иметь прототипа",
+    );
+  });
 });

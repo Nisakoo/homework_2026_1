@@ -13,7 +13,7 @@
  *
  * @returns {*} Глубокая копия исходного значения
  */
-function deepClone(obj) {
+const deepClone = (obj) => {
   if (obj === null || typeof obj !== "object") {
     return obj;
   }
@@ -22,12 +22,12 @@ function deepClone(obj) {
     return obj.map((item) => deepClone(item));
   }
 
-  const clonned = {};
+  const clonned = Object.create(Object.getPrototypeOf(obj));
   for (let key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       clonned[key] = deepClone(obj[key]);
     }
   }
 
   return clonned;
-}
+};
